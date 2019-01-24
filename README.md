@@ -26,5 +26,5 @@ Give examples
 ## Acknowledgments
 
 * Martin Isenburg, https://LAStools.org
-* Markus Schulz, https://Potree.org
+* Markus Schütz, https://Potree.org
 * Data from MNGEO, USGS National Map, UMN UAS
