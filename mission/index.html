@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<title>RSGAL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <img src="./images/RSL_logo_1085x1545.png" style="width:45%;" class="w3-round"><br><br>
+    <h4><b>REMOTE SENSING LAB</b></h4>
+    <p class="w3-text-grey"><a href="https://rs.umn.edu">rs.umn.edu</a></p>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>3D POINT CLOUDS</a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a> 
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+  </div>
+  <div class="w3-panel w3-large">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+  <!-- Header -->
+  <header id="portfolio">
+    <a href="#"><img src="./images/UMN_RSL.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <h1><b>3D Point Clouds</b></h1>
+	<p>Fast point cloud views developed by University of Minnesota RSL using <a href=http://www.LAStools.org/>LAStools</a> and <a href=http://www.potree.org/>Potree</a> </p>
+    <div class="w3-section w3-bottombar w3-padding-16">
+      <span class="w3-margin-right">Filter:</span> 
+       <a href=./><button class="w3-button w3-black">ALL</button></a>
+      <a href=lidar><button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>LiDAR</button></a>
+      <a href=photogrammetric><button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photogrammetric</button></a>
+      <a href=Earth_art><button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Earth Art</button></a>
+    </div>
+    </div>
+  </header>
+  
+    <!-- First Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/GLRI/"><img src="./images/GLRI_thumb.png" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>GLRI photogrammetric point cloud collection</b></p>
+        <p>During summer 2017, many UAS missions were completed in the St. Louis River Estuary and nearby coastal wetlands on the shore of Lake Superior. These acquistions are in support of the Great Lakes Restoration Initiative for coastal wetland monitoring. The Potree portal incorporates a baseglobe from OpenStreetMaps powered by Cesium .</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- First Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Dublin/"><img src="./images/Dublin_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Dublin lidar</b></p>
+        <p>A glorious high-density lidar point cloud colorized with 5cm RGB imagery find more here <a href="https://geo.nyu.edu/catalog/nyu_2451_38684">source data</a></p>
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Brisbane/"><img src="./images/brisbane_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Brisbane lidar</b></p>
+        <p>Lidar point cloud of Brisbane colorized with 10cm RGB imagery</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/HWRC_SP/"><img src="./images/HWRC_SP_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>HWRC Single Photon</b></p>
+        <p>Single-photon lidar acquired in Fall 2017 for the Hubachek Wilderness Research Center</p>
+      </div>
+    </div>
+  </div>
+  
+    
+  <!-- Second Photo Grid-->
+    <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/RedPine-Height/"><img src="./images/RedPine_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Superior National Forest</b></p>
+        <p>High-resolution photogrammetric point clouds are used for forest modeling</p>
+      </div>
+    </div>
+        <div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/RookieLake/"><img src="./images/rookieLake_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>SNF - Rookie Lake</b></p>
+        <p>A lake in Superior National Forest with significant emergent aquatic vegetation. UAS imagery derived point cloud.</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/CFC_fisher/"><img src="./images/fisher_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Cloquet Forestry Center - Fisher</b></p>
+        <p>A photogrammetric point cloud of a multi-use site at the Cloquet Forestry Center that is being managed for Fisher habitat</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Third Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/MtRainier/"><img src="./images/Rainier_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Mt Rainier</b></p>
+        <p>lidar elevation of Mt Rainier located in Washington</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Duluth_lidar/"><img src="./images/Duluth_lidar_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Duluth Lidar</b></p>
+        <p>Lidar point cloud for Duluth, colorized with NAIP imagery</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/Black_Ash/"><img src="./images/blackash_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Terrestrial Lidar</b></p>
+        <p>A terrestrial lidar scan from the ground. This is a composite of 5 different scans using a Faro scanner.</p>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Fourth Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/MPLS2016/"><img src="./images/MPLS2016_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>UMN - Minneapolis</b></p>
+        <p>East and West banks of the Minneapolis campus</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/SPC2016/"><img src="./images/SPC2016_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>UMN - St. Paul Fall</b></p>
+        <p>2016 Fall imagery collection of the St. Paul campus.</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/MiddleRiver/"><img src="./images/MiddleRiver_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Middle River</b></p>
+        <p>The Middle River follows a sinuous fluvial pattern as it flows into Lake Superior in Northern Wisconsin.</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Fifth Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/RedPine-Height/"><img src="./images/RedPine_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>SNF - Height normalized</b></p>
+        <p>Height normalized point cloud</p>
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/LookoutA/"><img src="./images/SNF_LA_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>SNF - Lookout A</b></p>
+        <p>Mixed forest region in Superior National Forest. High diversity of tree species creates an interesting landscape.</p>
+      </div>
+    </div>
+	<div class="w3-third w3-container">
+      <a href="http://rsl02.cfans.umn.edu/mission/SpruceStudy/"><img src="./images/SpruceStudy_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Spruce Study Plot</b></p>
+        <p>A grid of spruce trees are used for treatment testing</p>
+      </div>
+    </div>
+  </div> 
+  
+  <!-- Photo Grid 6-->
+  <div class="w3-row-padding">
+    
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Harvest/"><img src="./images/TimberHarvest_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Timber Harvest Area</b></p>
+        <p>A timber harvest in the Superior National Forest. Monitoring tree regeneration in harvested areas is an important part of sustainable forestry.</p>
+      </div>
+    </div>
+   <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Lookout-Height/"><img src="./images/Lookout_height_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>SNF Lookout Height</b></p>
+        <p>Height normalized point cloud composite of three missions. Oct 4, 2017.</p>
+      </div>
+    </div>
+   <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/StMichaels/"><img src="./images/StMichaels_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>St. Michael's</b></p>
+        <p>St Michael's cemetery in Stillwater, MN. This point cloud is a combination of UAS derived points and lidar ground points</p>
+      </div>
+    </div>
+
+  </div>
+  
+    <!-- Photo Grid 8-->
+  <div class="w3-row-padding">
+    
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/CFC_East2018/"><img src="./images/east2018_th.PNG" alt="Point Cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>CFC East 2018</b></p>
+        <p>The Cloquet Forestry Center is a University research center</p>
+      </div>
+    </div>
+   <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/HWRC_MD_1/"><img src="./images/hwrc_Grounds.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>HWRC Grounds</b></p>
+        <p>The Hubachek Wilderness Research Center pine plantations in October 2017.</p>
+      </div>
+    </div>
+   <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Erickson/"><img src="./images/erickson_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Erickson</b></p>
+        <p>Erickson road near Cloquet river in Independence, MN</p>
+      </div>
+    </div>
+
+  </div>
+
+
+<!-- Photo Grid 9-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Spain_Mobile/"><img src="./images/spain_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Spain Mobile lidar</b></p>
+        <p>A mobile lidar dataset from the Gipuzkoa province in Spain</p>
+      </div>
+    </div>
+	    <div class="w3-third w3-container w3-margin-bottom">
+      <a href="http://rsl02.cfans.umn.edu/mission/Flatirons/"><img src="./images/flatirons_th.PNG" alt="point cloud" style="width:100%" class="w3-hover-opacity"></a>
+      <div class="w3-container w3-white">
+        <p><b>Flatirons at Boulder, CO</b></p>
+        <p>Unique geology along the mountain ridge that overlooks Boulder, Colorado</p>
+      </div>
+    </div>
+</div>
+
+ 
+  <!-- Images of Me -->
+  <div class="w3-row-padding w3-padding-16" id="about">
+    <div class="w3-col m6">
+      <img src="./images/uas_logo eye 2000.png" alt="UAS" style="width:100%">
+    </div>
+    <div class="w3-col m6">
+      <img src="./images/UMN_RSL.png" alt="RSL" style="width:100%">
+    </div>
+  </div>
+
+  <div class="w3-container w3-padding-large" style="margin-bottom:32px">
+    <h4><b>About</b></h4>
+    <p>Our mission is to advance the development and application of remote sensing and geospatial analysis to inventory and monitor natural resources and environment through research and outreach. Much of the research is conducted in cooperation with public agencies in Minnesota. In addition faculty associated with the RSGAL are actively involved with instruction and graduate education.</p>
+    <hr>
+      
+  <!-- Contact Section -->
+  <div class="w3-container w3-padding-large w3-grey">
+    <h4 id="contact"><b>Contact</b></h4>
+    <div class="w3-row-padding w3-center w3-padding-24" style="margin:0 -16px">
+      <div class="w3-third w3-dark-grey">
+        <p><i class="fa fa-envelope w3-xxlarge w3-text-light-grey"></i></p>
+        <p>jknight@umn.edu</p>
+      </div>
+      <div class="w3-third w3-teal">
+        <p><i class="fa fa-map-marker w3-xxlarge w3-text-light-grey"></i></p>
+        <p>Saint Paul, MN</p>
+      </div>
+      <div class="w3-third w3-dark-grey">
+        <p><i class="fa fa-phone w3-xxlarge w3-text-light-grey"></i></p>
+        <p>(612) 624-3459</p>
+      </div>
+    </div>
+    <hr class="w3-opacity">
+    <form action="/action_page.php" target="_blank">
+      <div class="w3-section">
+        <label>Name</label>
+        <input class="w3-input w3-border" type="text" name="Name" required>
+      </div>
+      <div class="w3-section">
+        <label>Email</label>
+        <input class="w3-input w3-border" type="text" name="Email" required>
+      </div>
+      <div class="w3-section">
+        <label>Message</label>
+        <input class="w3-input w3-border" type="text" name="Message" required>
+      </div>
+      <button type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-32 w3-dark-grey">
+  <div class="w3-row-padding">
+    <div class="w3-third">
+      <h3>University of Minnesota</h3>
+	  <p>Department of Forest Resources</p>
+	  <p>1530 Cleveland Ave North</p>
+	  <p>St. Paul, MN 55108</p>
+    	  <img src="./images/Imaging.png" class="w3-left w3-margin-right" style="width:60px">
+          <img src="./images/Analysis.png" class="w3-left w3-margin-right" style="width:60px">
+          <img src="./images/Education.png" class="w3-left w3-margin-right" style="width:60px">
+          </div>
+  
+    <div class="w3-third">
+      <h3>LINKS</h3>
+      <ul class="w3-ul w3-hoverable">
+        <li class="w3-padding-16">
+          <img src="./images/rsl web header.png" class="w3-left w3-margin-right" style="width:200px">
+          <span class="w3-large"></span><br>
+          <span><a href=https://rs.umn.edu>rs.umn.edu</a></span>
+        </li>
+        <li class="w3-padding-16">
+          <img src="./images/asprslogo45.png" class="w3-left w3-margin-right" style="width:200px">
+          <span class="w3-large"></span><br>
+          <span><a href = https://wgl.asprs.org>wgl.asprs.org</a></span>
+        </li> 
+      </ul>
+    </div>
+
+    <div class="w3-third">
+      <h3>POPULAR TAGS</h3>
+      <p>
+        <span class="w3-tag w3-black w3-margin-bottom">Remote Sensing</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Minnesota</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Forest Resources</span>
+        <span class="w3-tag w3-grey w3-small w3-margin-bottom">UAS</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">LiDAR</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Water Resources</span>
+        <span class="w3-tag w3-grey w3-small w3-margin-bottom">Imaging</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Geospatial</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">OBIA</span>
+        <span class="w3-tag w3-grey w3-small w3-margin-bottom">Analysis</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">ASPRS</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Classification</span>
+        <span class="w3-tag w3-grey w3-small w3-margin-bottom">Education</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Drone</span>
+      </p>
+    </div>
+
+  </div>
+  </footer>
+  
+  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
