@@ -11,7 +11,7 @@ Open and a command prompt and run the following command:
 ```
 cd C:\lastools\bin
 ```
-###LASground_new
+### LASground_new
 Now that the point cloud has been tiled appropriately, we can begin to assign classes to the points. We start with identifying ground points with the “lasground_new” tool. This tool fits a horizontal plane to the points starting with a coarse estimate of the low points and finds ground points based on how well they fit to the initial ground plane and neighboring points. The step command is very important here as it determines the size of the coarse ground estimate. The gui version of the tool has options such as -wilderness (3m), -nature (5m), -town (10m), -city (25m), and -metro (50m) for the size of the initial ground estimate. In this urban scene, we will use a step size of 100 to avoid classifying building rooftops as ‘ground’ and the ‘ultra fine’ option for the initial ground estimate. There are detailed descriptions for the many options available for this command in the README.txt file. The ‘-compute_height’ flag will calculate the vertical height difference from each point to the ground surface and store this value in the ‘user_data’ field. This is a necessary before running the lasclassify tool. Make sure to use the multi-core functionality here as this command is processing-intensive. If the point cloud contains more than 20 million points, LASground will fail to allocate enough memory. To fix this issue, either reduce your tile size or subset the point cloud by thinning. 
 
 ```
@@ -24,12 +24,12 @@ Run lasview on one of the tiles.
 
 ![allpoints](/tutorials/images/allpoints.png)
         All points
-	![groundpoints](/images/groundpoints.png)
+	![groundpoints](/tutorials/images/groundpoints.png)
 	Ground points 
-	![Classification](/images/classification.png)
+	![Classification](/tutorials/images/classification.png)
 	Classification
 
-###LASnoise
+### LASnoise
 You might notice that there are points below the ground or very high in the air. These can come from a variety of sources ranging from sensor miscalibration, reflectance off bright-surface features, even birds that get in the way! Usually these points are removed or classified as noise. The most egregious noise in the point cloud can be filtered out by using height thresholds but sometime that is aggressive. This tools works by counting the number of neighboring points in a specified 3D window. If the threshold number of neighboring points is not met, the point will be assigned to the noise class. These points will be assigned the class 7 which is designated for ‘noise’ points but they will not be removed from the point cloud. Any points less than -2 meters or greater than 60 meters from the ground surface will be classified as noise. The height threshold may need to be changed depending on the height of features in the landscape. 
 ```
 Lasnoise -i tiles\*g.laz -step_xy 4 -step_z 2 -isolated 5 -olaz -odix _n -cores 7
