@@ -22,10 +22,10 @@ Check to see how well the ground classification worked by viewing one tile and c
 
 Run lasview on one of the tiles.
 
-![allpoints](/tutorials/images/allpoints.png)        
-![groundpoints](/tutorials/images/groundpoints.png)
-![Classification](/tutorials/images/classification.png)
-All points	Ground points 	Classification
+![allpoints](/tutorials/images/allpoints.png "All Points")        
+![groundpoints](/tutorials/images/groundpoints.png "Ground Points")
+![Classification](/tutorials/images/classification.png "Classification")
+
 
 ### LASnoise
 You might notice that there are points below the ground or very high in the air. These can come from a variety of sources ranging from sensor miscalibration, reflectance off bright-surface features, even birds that get in the way! Usually these points are removed or classified as noise. The most egregious noise in the point cloud can be filtered out by using height thresholds but sometime that is aggressive. This tools works by counting the number of neighboring points in a specified 3D window. If the threshold number of neighboring points is not met, the point will be assigned to the noise class. These points will be assigned the class 7 which is designated for ‘noise’ points but they will not be removed from the point cloud. Any points less than -2 meters or greater than 60 meters from the ground surface will be classified as noise. The height threshold may need to be changed depending on the height of features in the landscape. 
