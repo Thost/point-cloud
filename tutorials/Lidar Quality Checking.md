@@ -1,5 +1,5 @@
 # Lidar Quality Checking
-###### Adapted from April 20, 2013 by martin isenburg
+###### Adapted from [April 20, 2013](http://rapidlasso.com/2013/04/20/tutorial-quality-checking/) by [Martin Isenburg](http://rapidlasso.com/lastools/)
 
 ```
 Tools: LASview, LASinfo, LASoverlap, LAScontrol, LAStile, LASboundary, LASgrid
