@@ -47,10 +47,9 @@ Lasclassify -i tiles\*n.laz -ignore_class 7 -step 2 -planar 0.1 -rugged 0.4 -gro
 ```
 Then use lasview to see the classification results
 ![Class](/tutorials/images/class.png)
-![ClassB](/tutorials/images/classB.png)
-Ground + Buildings 
-![ClassT](/tutorials/images/classT.png)
-Ground + Vegetation
+![ClassB](/tutorials/images/classB.png "Ground + Buildings")
+![ClassT](/tutorials/images/classT.png "Ground + Vegetation")
+
 
 We can visually check individual tiles for errors but it is hard to inspect the whole dataset this way. Let’s create a raster image using the classification flag to inspect the classification results over the whole area.
 ```
@@ -65,10 +64,10 @@ Once the buildings and trees have been classified, we can extract building footp
 ```
 Lasboundary -i tiles\*c.laz -disjoint -concavity 2.5 -keep_classification 6 -overview -oshp -o products\buildings.shp
 ```
-![BuildFP](/tutorials/images/BuildFPb.png)
-Building footprints shapefile	
-![BuildFP_class](/tutorials/images/BuildFP_class.png)
-Overlay on classification
+![BuildFP](/tutorials/images/BuildFPb.png "Building footprints shapefile")
+	
+![BuildFP_class](/tutorials/images/BuildFP_class.png "Overlay on classification")
+
 
 
 ### Height Normalize
@@ -82,17 +81,14 @@ The following command will normalize our classified LAZ dataset to the ground. I
 lasheight -i tiles\*c.laz -replace_z -odix _z -cores 7 -olaz
 ```
 
-![HeightNorm](/tutorials/images/heightNorm.png)
-Height normalized point cloud 
+![HeightNorm](/tutorials/images/heightNorm.png "Height normalized point cloud")
+ 
 
 ### Spike-free DSM
 Next, we will create a surface model from the normalized LAZ using the spike-free method in las2dem. Instead of using only the first returns to create the DSM, this method uses all relevant returns. In many tutorials, the first returns are assumed to represent the highest features on the landscape. In the real world, this is not necessarily the case. The biggest issue is that some first returns will reach the ground either by penetrating through the tree canopy or from off-nadir scan angle. The result is very steep ‘spike’ triangles that occur in vegetation and on the edges of buildings. These turn into ‘data pits’ in the generated surface model that do not represent the 3D surface of the landscape. By using the ‘spike-free’ flag with las2dem, we eliminate the spikes and interpolate relevant returns in a stepwise fashion beginning with the highest z-value points, triangulating the proximate points, and proceeding downwards. 
 
-![firstreturn](/tutorials/images/firstreturn.png)
-First Return 
-![spikefree](/tutorials/images/spikefree.png)
-Spike-free DSM
-
+![firstreturn](/tutorials/images/firstreturn.png "First Return ")
+![spikefree](/tutorials/images/spikefree.png "Spike-free DSM")
 
 The key parameter for the spike-free method is the ‘freeze constraint’ which is the threshold value for the edge length of any triangle in meters. Once a triangle exceeds the threshold, it is frozen in place. The appropriate value for the ‘freeze-constraint’ depends on the pulse-density. The recommended value is about three times the average pulse spacing. 
 
@@ -109,6 +105,7 @@ While a nDSM is great for modeling height of trees, the height model ignores the
 	
 
 ![treecrown](/tutorials/images/treecrown.png)
+
 To create the minimum height model, we will use the same las2dem command but we are going to trick it by inverting the normalized point cloud. The spike-free surface model is built from the top-down so by inverting the point cloud we are now surface modeling from the bottom-up. To invert the point cloud, simply use the generic las2las and multiply the z value by -1 with the flag ‘-scale_z -1’ and we will remove all points below the threshold of 1 meter (returns on the ground) using ‘-drop_z_below 1’. The las2dem command is the same as before with a freeze constraint of 2 meters, step size of 1, and kill triangles larger than 5 meters. The final step will re-vert the surface model to be right-side up again.
 
 Flip the point cloud and remove points below 1 meter
@@ -130,12 +127,12 @@ To visualize a cross-section of a point cloud in LASview, press the “x” key 
 ```
 lasview -i products\minimum.bil -i products\ndsm.bil -faf
 ```
-![invert](/tutorials/images/invert.png)
-Inverted point cloud 
-![minimum](/tutorials/images/minimum.png)
-Minimum surface model 
-![profile](/tutorials/images/profile.png)
-Profile of max and min height model
+![invert](/tutorials/images/invert.png "Inverted point cloud")
+
+![minimum](/tutorials/images/minimum.png "Minimum surface model")
+
+![profile](/tutorials/images/profile.png "Profile of max and min height model")
+
 
 Additional raster processing can be completed in a more suitable raster process environment. Subtract the raster layers ndsm.bil and minimum.bil to product the ‘crown height’ raster model. Set any nodata values to 0. 
 
@@ -147,8 +144,8 @@ raster calculator	 "nDSM.bil"-"minimum.bil" = CrownHeight.tif
 raster calculator 	“Con(IsNull("CrownHeight.tif "),0,"CrownHeight.tif”) 
 ```
 
-![CrownModel](/tutorials/images/CrownModel.png)
-Crown Height Raster
+![CrownModel](/tutorials/images/CrownModel.png "Crown Height Raster")
+
 
 More resources
 These are some of the applications of LAStools but there are many others as well. There is an active user forum (http://groups.google.com/forum/#!forum/lastools) that has useful additional knowledge and answers to all types of point cloud related questions. 
