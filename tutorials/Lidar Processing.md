@@ -22,7 +22,7 @@ Check to see how well the ground classification worked by viewing one tile and c
 
 Run lasview on one of the tiles.
 
-![allpoints](/images/allpoints.png)
+![allpoints](/tutorials/images/allpoints.png)
         All points
 	![groundpoints](/images/groundpoints.png)
 	Ground points 
