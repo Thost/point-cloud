@@ -1,5 +1,5 @@
-#Lidar Processing
-######Adapted from October 13, 2013 by martin isenburg
+# Lidar Processing
+###### Adapted from October 13, 2013 by martin isenburg
 ```
 Tools: LASground_new, LASnoise, LASheight, LASclassify, LAS2dem, LASgrid, LASview, LASboundary
 ```
@@ -38,7 +38,7 @@ How would you figure out how many points were classified as noise?
 
 
 
-###LASclassify
+### LASclassify
 Now to classify returns from surface features, we employ the LASclassify tool. LASclassify is an automated point cloud classification tool that uses planar-fitting and height to assign class 5 and 6 to points (high vegetation and buildings, respectively). This command uses two key parameters to distinguish between buildings and tall vegetation. The ‘planar’ parameter sets tolerance for neighboring points that are in a linear plane (building rooftops). The ‘rugged’ parameter is the tolerance for deviation from the linear plane and assigns these points to class 5 ‘vegetation’. The defaults for these parameters are shown in the graphic below. By raising the ‘-planar’ value, more points will be assigned class 6. By lowering the ‘-rugged’ threshold, more points will be assigned class 5. Any points that don’t meet the planar, rugged, or ground offset threshold remain unclassified (1). The step parameter we have seen before but here it sets the window size for computing planarity or ruggedness. The default step is 2 meters. Increasing the step size will reduce false positives but might miss smaller buildings. As with all tools, there is a detailed [README.txt](http://lastools.org/download/lasclassify_README.txt) file for more parameter information. 
 
 
@@ -62,7 +62,7 @@ Open the raster file in ArcMap and chance the Symbology to “unique values” a
 ![ArcMapSymb](/images/ArcMapSymb.png)
 
 
-###Building footprints
+### Building footprints
 Once the buildings and trees have been classified, we can extract building footprints. We will call again on the LASboundary tool that was used to create the tile index. LASboundary creates a concave hull around the boundary of points. This time, we will filter only the points classified as building (6). We will also add the flag ‘-disjoint’ to separate the polygons. The ‘-concavity’ parameter of 2.5 meters sets the size of the smallest distance between two features. This value needs to be 2 to 3 times the average point spacing. If it is set too small, the boundary will cut into the building and create irregular edges. If it is set too large, adjacent buildings will be merged. Try different values with the concavity parameter to see how it changes the results.
 ```
 Lasboundary -i tiles\*c.laz -disjoint -concavity 2.5 -keep_classification 6 -overview -oshp -o products\buildings.shp
@@ -73,7 +73,7 @@ Building footprints shapefile
 Overlay on classification
 
 
-###Height normalize
+### Height Normalize
 Creating an elevation raster is one of the most common uses of aerial lidar. There are many terms that are used to describe different representations of 3D terrain. You will see DSM, DTM, DEM, CHM, DBM, nDSM and more. Sometimes these terms have different meanings so the best way to distinguish between them is rigorous documentation in how the model is created and the intended application. 
 ![vertical](/images/vertical.png)
 
@@ -110,7 +110,7 @@ Lasgrid -i tiles\*nDSM.bil -merged -o products\nDSM.bil -obil -utm 15N -nad83
 While a nDSM is great for modeling height of trees, the height model ignores the fact that the tree canopy doesn’t extend to the ground in the real world. In the point cloud, we can clearly see the gap between the lowest hanging branches and the ground, so let’s try to model the underside of the tree crown as well. For this to work, the point density must be sufficient enough to provide returns from the inner branches of the tree. Attempting to model the interior of the tree crown also depends on leaf-off conditions to allow laser penetration to the lower branches. 
 	
 
-![treecrown](\images\treecrown.png)
+![treecrown](/images/treecrown.png)
 To create the minimum height model, we will use the same las2dem command but we are going to trick it by inverting the normalized point cloud. The spike-free surface model is built from the top-down so by inverting the point cloud we are now surface modeling from the bottom-up. To invert the point cloud, simply use the generic las2las and multiply the z value by -1 with the flag ‘-scale_z -1’ and we will remove all points below the threshold of 1 meter (returns on the ground) using ‘-drop_z_below 1’. The las2dem command is the same as before with a freeze constraint of 2 meters, step size of 1, and kill triangles larger than 5 meters. The final step will re-vert the surface model to be right-side up again.
 
 Flip the point cloud and remove points below 1 meter
@@ -132,11 +132,11 @@ To visualize a cross-section of a point cloud in LASview, press the “x” key 
 ```
 lasview -i products\minimum.bil -i products\ndsm.bil -faf
 ```
-![invert](\images\invert.png)
+![invert](/images/invert.png)
 Inverted point cloud 
-![minimum](\images\minimum.png)
+![minimum](/images/minimum.png)
 Minimum surface model 
-![profile](\images\profile.png)
+![profile](/images/profile.png)
 Profile of max and min height model
 
 Additional raster processing can be completed in a more suitable raster process environment. Subtract the raster layers ndsm.bil and minimum.bil to product the ‘crown height’ raster model. Set any nodata values to 0. 
@@ -149,7 +149,7 @@ raster calculator	 "nDSM.bil"-"minimum.bil" = CrownHeight.tif
 raster calculator 	“Con(IsNull("CrownHeight.tif "),0,"CrownHeight.tif”) 
 ```
 
-![CrownModel](\images\CrownModel.png)
+![CrownModel](/images/CrownModel.png)
 Crown Height Raster
 
 More resources
