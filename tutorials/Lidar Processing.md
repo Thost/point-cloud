@@ -40,7 +40,7 @@ How would you figure out how many points were classified as noise?
 Now to classify returns from surface features, we employ the LASclassify tool. LASclassify is an automated point cloud classification tool that uses planar-fitting and height to assign class 5 and 6 to points (high vegetation and buildings, respectively). This command uses two key parameters to distinguish between buildings and tall vegetation. The ‘planar’ parameter sets tolerance for neighboring points that are in a linear plane (building rooftops). The ‘rugged’ parameter is the tolerance for deviation from the linear plane and assigns these points to class 5 ‘vegetation’. The defaults for these parameters are shown in the graphic below. By raising the ‘-planar’ value, more points will be assigned class 6. By lowering the ‘-rugged’ threshold, more points will be assigned class 5. Any points that don’t meet the planar, rugged, or ground offset threshold remain unclassified (1). The step parameter we have seen before but here it sets the window size for computing planarity or ruggedness. The default step is 2 meters. Increasing the step size will reduce false positives but might miss smaller buildings. As with all tools, there is a detailed [README.txt](http://lastools.org/download/lasclassify_README.txt) file for more parameter information. 
 
 
-![ClassGraphic](/images/classGraphic.png)
+![ClassGraphic](/tutorials/images/classGraphic.png)
 Run lasclassify with the default parameters. 
 ```
 Lasclassify -i tiles\*n.laz -ignore_class 7 -step 2 -planar 0.1 -rugged 0.4 -ground_offset 2 -olaz -odix _c -cores 7
