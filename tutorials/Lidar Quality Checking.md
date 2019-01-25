@@ -163,7 +163,64 @@ Easting|Northing|Z
 486427.81|4980586.41|277.84
 
 Run the lascontrol command to assess the vertical accuracy of the point cloud compared to the control points. ‘-cp’ designates the control points file. ‘-cp_out’ is the report output. ‘-v’ stands for ‘verbose’ which provides additional information in the command window.
-
+```
 Lascontrol -i strips_raw\*.laz -cp strips_raw\controlpoints.csv -cp_out products\report.txt -odir products -v
+```
+![lascontrol](/images/lascontrol.png)
+The standard output will produce an error report with average absolute error, root mean square error, standard deviation of the errors, average error, and skew. It will also produce a txt file report that contains a copy of the original controls points with two values prefixed. The values added are the computed z-value at the control point and calculated z-difference in meters for each point. The contracted vertical accuracy of the lidar collection was 15 cm Z-RMSE. Does the point cloud meet this accuracy standard? Plot the distribution of z-error. Are there any outliers? What might be the cause of z-error?
 
+
+
+
+### LAStile
+Next we will convert the flightline strips into a tiled LAZ dataset. The “lastile” command is the right tool for the job. We will set the tile size to 1000 meters with a 50 m buffer around each tile. It is critically important to have buffered tiles for any classification or surface model processing. Buffered points are given the “withheld” flag to be easily dropped later. We also rescale the coordinate resolution to a more appropriate centimeter resolution. The output name is the root name of the tiles. 
+```
+Lastile -i strips_raw\*.laz -tile_size 1000 -buffer 50 -flag_as_withheld -rescale 0.01 0.01 0.01 -odir tiles -o UMN.laz
+```
+![lastile](/images/lastile.png)
+The GUI version will look like this and will give you an idea of how many tiles will be produced. It can be useful for finding the optimal tile arrangement.
+
+### LASboundary
+Now we can create a tile index of the newly tiled laz files using lasboundary. Lasboundary creates a shapefile around the extent of the points. With the flag -use_tile_bb, the polygon created will be of the bounding box containing all points. “-labels” gives each polygon an attribute with the file name. The “-overview” flag will merge the individual polygons into one merged shapefile. Note to not use the “-merged” flag here as that would return one large bounding box around all the points. Lasboundary has other useful applications that we will return to later.
+```
+Lasboundary -i tiles\*.laz -use_tile_bb -overview -labels -odir products -o tile_index.shp -oshp -utm 15N -nad83
+```
+
+Open the shapefile in ArcMap to check the results. Now our properly tiled and indexed dataset is ready for further processing that can make use of the multi-core functionality in LAStools.
+
+
+
+
+### LASgrid 
+The easiest way to create a map from the point cloud is using lasgrid. This tools creates a raster image of a number of attributes from the point cloud files including
+* Elevation
+* Intensity
+* Point density
+* Number of returns
+* Classification
+
+The following commands will use multiple cores to process the LAZ tiles in parallel. LAStools is able to loop through a list of files and process multiple files simultaneously on separate cores. 
+
+
+
+Run the example scripts below to process the tiles in parallel to create BIL format rasters then merge into a single TIF for ‘point density’ and ‘number of returns.’ Once complete, open these in ArcMap to verify the results. 
+```
+Lasgrid -i tiles\*.laz -counter -step 1 -odir tiles -obil -cores 7
+Lasgrid -i tiles\*.bil -merged -o pointDensity.tif -odir products -otif -utm 15N -nad83
+
+Lasgrid -i tiles\*.laz -number_returns -step 1 -odir tiles -obil -cores 7
+Lasgrid -i tiles\*.bil -merged -o numberReturns.tif -odir products -otif -utm 15N -nad83
+```
+
+Write a script to rasterize the elevation and intensity on the tiles using lasgrid then merge.
+
+![pointdensity](/images/pointdensity.png)
+Point density raster
+Darker = Greater
+
+![numReturns](/images/numReturns.png)
+Number of returns raster
+Darker = greater
+
+We’ve now completed a suite of validation checks on the lidar point cloud and created a spatially tiled LAZ dataset from flight lines. The next exercise will use the tiled point cloud dataset for classification, DEM creation, normalization, and feature extraction. 
 
