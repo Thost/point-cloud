@@ -22,11 +22,11 @@ Check to see how well the ground classification worked by viewing one tile and c
 
 Run lasview on one of the tiles.
 
-![allpoints](/tutorials/images/allpoints.png)
+![allpoints](<img "width=40" src="./tutorials/images/allpoints.png">)
         All points
-	![groundpoints](/tutorials/images/groundpoints.png)
+	![groundpoints](/tutorials/images/groundpoints.png| width=40)
 	Ground points 
-	![Classification](/tutorials/images/classification.png)
+	![Classification](/tutorials/images/classification.png| width=40)
 	Classification
 
 ### LASnoise
