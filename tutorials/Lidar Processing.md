@@ -72,7 +72,7 @@ Lasboundary -i tiles\*c.laz -disjoint -concavity 2.5 -keep_classification 6 -ove
 
 ### Height Normalize
 Creating an elevation raster is one of the most common uses of aerial lidar. There are many terms that are used to describe different representations of 3D terrain. You will see DSM, DTM, DEM, CHM, DBM, nDSM and more. Sometimes these terms have different meanings so the best way to distinguish between them is rigorous documentation in how the model is created and the intended application. 
-![vertical](tutorials/images/vertical.jpg)
+![vertical](/tutorials/images/vertical.jpg "Vertical Profile")
 
 The most basic method to generate a Digital Surface Model (DSM) raster from the point cloud is to use the highest elevation value from all points that fall in each grid cell. However, this only works at resolutions that are much coarser than the point spacing. To produce higher resolution surface models, we will need to interpolate between points. The interpolation method employed in LAStools is 2D Delaunay triangulation which produces a Triangular Irregular Network (TIN) that is then rasterized using a user-defined resolution. A normalized DSM (nDSM) is created in a similar way but the elevations are height normalized to the ground surface (DEM). This normalization is often completed using the raster products where DSM - DEM = nDSM. The ‘normalized DSM’ then represents height rather than elevation. However, we can also normalize the point cloud directly. This can be useful for detailed forestry analysis where the height and structure above ground level is more relevant than elevation. 
 
