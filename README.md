@@ -4,6 +4,8 @@ point cloud processing workflows using LAStools
 
 <a href="http://rsl02.cfans.umn.edu/mission/" target="_blank"> ![animation](./docs/images/hwrc_bond_anim_oblique.gif) </a>
 
+Tutorials for lidar processing with LAStools
+
 Trevor2.0 - for use on pix4d (classified) UAS point clouds
 
 potreeviewers - for fast webGL point cloud visualization
