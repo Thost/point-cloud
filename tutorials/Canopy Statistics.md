@@ -46,6 +46,10 @@ lasheight -i 15TWP59253107.laz -replace_z -class 2 8 -olaz -odix _z -v
 
 Now we can begin to calculate canopy metrics using the tool LAScanopy. There are many metrics that can be produced from the point cloud. A few of the most popular for forestry applications are average, 95th percentile, percent coverage, and standard deviation. These can be calculated at various grid sizes (step) depending on (1) the density of the point cloud and (2) the resolution of the desired output. For modeling purposes, step sizes of 10 - 20 m are common because the grid size corresponds with the plot size used in building the model. For fine detail in mapping, smaller step sizes are used such as 1 - 10 m but require higher point cloud density to produce useful results. Canopy metrics are calculated by filtering the points by a height threshold. This is done to remove ground points from the calculation and more accurately describe the distribution of canopy points. The default for the height cutoff in LAScanopy is 1.37 m (4.5 ft; international breast height). If necessary this can be changed using the ‘-height_cutoff’ but we will use the default settings for this example. 
 
+```
+lascanopy -i *z.laz -step 2 -avg -p 95 -cov -std -otif -drop_classification 6 7 9 10 19
+```
+
 
 
 
