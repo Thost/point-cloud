@@ -1,12 +1,14 @@
+# Photogarmmetric Point Clouds
+
 ```
 Tools: LASview, LASinfo, LASsort, LASthin, LAScontrol, LASheight, LAScanopy, lASpublish
 ```
 
-***Overview
+### Overview
 
 This exercise is focused on integration of multiple types of point clouds. We will explore a photogrammetric point cloud that was produced from dense image matching of many overlapping UAS images. Some validation and pre-processing of the point cloud is required. Then we will calibrate the point cloud using a lidar dataset acquired approximately at the same time. Then we will normalize the point cloud to obtain height above ground measurements and summarize those measurements for a red pine plantation in the Hubachek Wilderness Research Center near Ely, MN. Finally, we will produce web-based point cloud visualization for the dataset. 
 
-Photogrammetric Point Cloud
+### Photogrammetric Point Cloud
 
 Photogrammetry has been a established practice in remote sensing for many years. Traditionally, it was used to develop stereoscopic views from overlapping aerial images. It is the principal behind orthorectification for topographic displacement. Modern photogrammetry is computer driven by software that can compare two or more overlapping images, ‘match’ individual pixels, and locate them in three dimensional space. The product is a point cloud that is similar in appearance to a lidar derived point cloud. The main difference is that photogrammetric point clouds have poor foliage penetration (FOPEN). Where a lidar laser beam can pass through small gaps in the canopy, a photogrammetric point must be present in at least two different images to be identified as a match point. We can reduce this issue by increasing the overlap between images, but it is almost impossible to obtain ground points in closed canopy from the optical data. Fortunately, we can use these two different forms of 3D point clouds in conjunction with one another to obtain high accuracy height normalization, improve classification, and improve the spatial orientation of the data. 
 
@@ -20,7 +22,7 @@ Photogrammetric point cloud - Hubachek Wilderness Research Center
 
 As the data appears in the view window, notice how the pattern in which the points are drawn. This corresponds with the point order within the LAZ file. Point order matters in a big way when it comes to reading and processing point clouds. This point cloud is not stored in the most spatially coherent order. The points are arranged in long vertical lines rather than small square cubes. We can reorder the points using the LASsort tool. 
 
-LASsort 
+### LASsort 
 
 We call LASsort to reorder the point cloud into a spatially coherent order to improve processing speed and reduce file storage size. We also rescale coordinate resolution to centimeter (0.01 m) scale to further reduce file size. Photogrammetric point clouds don’t have multiple returns but they are similar to first returns in lidar. Set the return number to 1 for all points using ‘-set_return_number 1’. The output file is LAZ with ‘_s’ appended file name. Set the target EPSG to 6344 to project the data to the same CRS as the lidar. Finally, we specify -cpu64 to use the 64-bit version of the tool.
 ```
@@ -30,7 +32,7 @@ lassort -i ../3/photogrammetric.laz -rescale 0.01 0.01 0.01 -set_return_number 1
 
 Result: The output file takes up 35% less disk space and will read much faster in the additional processing steps. 
 
-Vertical datums
+### Vertical datums
 
 Now that we have that out of the way, let’s compare our point cloud with lidar ground points. Run the following command to view both together. 
 ```
@@ -43,7 +45,7 @@ This doesn’t look good, the ground points are above the trees in our collect. 
 
 The vertical displacement is the result of differing reference frames. One is measuring ellipsoidal height while the other is measuring orthometric (geoid) height. There are various models of the earth’s equipotential surface called geoids (the latest version is Geoid12B). Any GPS measurements are ellipsoidal height. We must convert these to orthometric height to compare the datasets. To do this, we will use lidar ground points with LAScontrol to calculate the difference and adjust the z-values in the photogrammetric point cloud. First we must obtain our control points from the lidar ground dataset. 
 
-LASthin
+### LASthin
 
 We need a list of control points to use as an input for LAScontrol. These must be well-distributed and in ASCII text format. We already have a good ground estimate from the lidar dataset but there are more points than we need. LASinfo will tell us that there are 1,782,896 ground points in the file lidar_ground.laz. We can use LASthin to greatly reduce this number and output this file as in plain text. We will keep one point every 20 meters using the flag ‘-step 20’ and ‘-otxt’ to output as a TXT file. 
 ```
@@ -52,7 +54,7 @@ lasthin -i ../3/lidar_ground.laz -step 20 -otxt
 
 Thinned ground points
 
-LAScontrol 
+### LAScontrol 
 
 This list of points will now be used as our control points in LAScontrol. We will use the flags ‘-step 1’ and ‘-keep_class 2 11’ to set a filter for to keep points within 1 meter of each control point and only points classified as ground (2) and road (11). The flags  ‘-adjust_z’, ‘-olaz’, and ‘-odix _adj’ are included so that a new LAZ with adjusted z-values is written as an output. 
 ```
@@ -73,7 +75,7 @@ Check your directory for the output LAZ file that ends with ...adj.laz. Open thi
 lidar points: red, photogrammetric points: green
 
 
-LASheight
+### LASheight
 
 We will use LASheight to normalize the points to the height above ground for each point. In this case, we use an external ground points file instead of the default which is ground classified points stored internally in the LAZ. 
 ```
@@ -90,7 +92,7 @@ done with 'photogrammetric_s_adj_z.laz'. total time 65.833 sec.
 Normalized photogrammetric point cloud
 
 
-LAScanopy
+### LAScanopy
 
 Now we can begin to calculate canopy metrics using the tool LAScanopy. There are many metrics that can be produced from the point cloud. A few of the most popular for forestry applications are average, 95th percentile, percent coverage, and standard deviation. We will first use a polygon shapefile as our AOI using the ‘-lop’ input which stands for ‘list of plots’ and takes a shapefile as an input. The shape file contains four 1/10 acre plots and a stand boundary. 
 
@@ -112,7 +114,7 @@ lascanopy -i ../3/photogrammetric_s_adj_z.laz -step 1 -avg -p 95 -cov -std -otif
 We can compare the raster values to the summary statistics in the CSV table. Which plot had the highest average? Which plot had the most variance? Do those make sense looking at the raster maps? 
 
 
-LASpublish
+### LASpublish
 
 Finally, we will use LASpublish to create a web viewer to display point clouds. LASpublish is a tool that will build the HTML and associated files for a potree web viewer. Potree is an open-source and powerful WebGL point cloud viewer. We will use the adjusted photogrammetric point cloud and the lidar ground points. 
 ```
