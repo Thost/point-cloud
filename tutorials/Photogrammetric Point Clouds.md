@@ -1,4 +1,4 @@
-# Photogarmmetric Point Clouds
+# Photogrammetric Point Clouds
 
 ```
 Tools: LASview, LASinfo, LASsort, LASthin, LAScontrol, LASheight, LAScanopy, lASpublish
