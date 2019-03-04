@@ -6,10 +6,14 @@ Tools: LASview, LASinfo, LASoverlap, LAScontrol, LAStile, LASboundary, LASgrid
 ```
 
 ### Getting Started 
+
+This is a guide for inspecting a lidar point cloud in a 3D viewer, assessing the quality of the lidar dataset, and preparing the point cloud for further processing. This guide uses the LAStools suite of lidar processing tools. We will access LAStools through a command line window to call commands for viewing, inspecting, validating, and manipulating the point cloud. LAStools is not free software, please use the licensed version provided. The non-licensed version will still run the tools successfully but will introduce small errors into any outputs created. To get started, download the LAStools zip folder provided and extract the file to the root C: directory. All of the tools are located in the ‘bin’ folder and the data is located in the ‘strips_raw’ folder. For simplicity, we will work in the ‘.\lastools\bin’ directory, so open a DOS command line window and change the directory to the LAStools bin directory with the following command. 
+
 This is a guide for assessing the quality of a raw lidar flight strips, preparing the lidar for processing, and generating raster and vector derivative products such as DEMs, DSMs, CHMs, and building footprints. This guide uses the LAStools suite of powerful lidar processing tools. We will use the DOS command line version of LAStools to execute lastools commands but there are GUI versions for each of the LAStools. The latest version of LAStools can be downloaded here: https://rapidlasso.com/lastools/. To get started, download the LAStools file provided and move it to the root C: directory. There are 27 LAZ flight lines provided in the directory ‘.\lastools\bin\strips_raw.’ For simplicity we will work in the ‘.\lastools\bin’ directory, so open a DOS command line window and change directory to the lastools bin directory with the command: 
 ```
 cd c:\lastools\bin
 ```
+This folder contains all the tools that we will be using and many more. Each tool is an executable file that can be called by opening the EXE file from the file explorer or typing the name of the file in the command window. This exercise focuses on using the command window to run the tools. The data we will be using is in a folder titled ‘strips_raw’ folder. There are 27 LAZ flight lines provided. We will walk through the steps to assess the data, merge the overlapping flight lines, and then spatially divide the point cloud into tiles for subsequent processing.  
 
 In this exercise, we will check that the lidar collection meets certain specifications, such as:
 
@@ -17,8 +21,10 @@ In this exercise, we will check that the lidar collection meets certain specific
 * Vertical RMSE less than 15 cm
 * Complete and consistent coverage of the UMN campus 
 
-### LASview
-Let's first inspect the point cloud from one flight line visually to see if the data makes sense. The command below will on-the-fly down-sample the data and display only around 5 million points:
+
+### LASview 
+
+The first task is to visually inspect the point cloud from one flight line. LASview is used to display the 3D point cloud many times throughout this exercise and is the easiest way to confirm that a tool has successfully achieved the intended result. The viewer itself is very powerful for filtering and manipulating the point cloud but it takes time and practice to master the interface functions.   The command below will launch the viewer in a new window and display the point cloud. 
 
 ```
 Lasview -i strips_raw\flight_1222.laz
