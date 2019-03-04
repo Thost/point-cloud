@@ -22,7 +22,7 @@ Check to see how well the ground classification worked by viewing one tile and c
 
 Run lasview on one of the tiles.
 
-![allpoints](/tutorials/images/allpoints.png "All Points")        
+![allpoints](/tutorials/images/allpoints.png "All Points")    
 ![groundpoints](/tutorials/images/groundpoints.png "Ground Points")
 ![Classification](/tutorials/images/classification.png "Classification")
 
@@ -40,23 +40,23 @@ How would you figure out how many points were classified as noise?
 Now to classify returns from surface features, we employ the LASclassify tool. LASclassify is an automated point cloud classification tool that uses planar-fitting and height to assign class 5 and 6 to points (high vegetation and buildings, respectively). This command uses two key parameters to distinguish between buildings and tall vegetation. The ‘planar’ parameter sets tolerance for neighboring points that are in a linear plane (building rooftops). The ‘rugged’ parameter is the tolerance for deviation from the linear plane and assigns these points to class 5 ‘vegetation’. The defaults for these parameters are shown in the graphic below. By raising the ‘-planar’ value, more points will be assigned class 6. By lowering the ‘-rugged’ threshold, more points will be assigned class 5. Any points that don’t meet the planar, rugged, or ground offset threshold remain unclassified (1). The step parameter we have seen before but here it sets the window size for computing planarity or ruggedness. The default step is 2 meters. Increasing the step size will reduce false positives but might miss smaller buildings. As with all tools, there is a detailed [README.txt](http://lastools.org/download/lasclassify_README.txt) file for more parameter information. 
 
 
-![ClassGraphic](/tutorials/images/classGraphic.png)
+![ClassGraphic](/tutorials/images/classGraphic.png)  
 Run lasclassify with the default parameters. 
 ```
 Lasclassify -i tiles\*n.laz -ignore_class 7 -step 2 -planar 0.1 -rugged 0.4 -ground_offset 2 -olaz -odix _c -cores 7
 ```
-Then use lasview to see the classification results
-![Class](/tutorials/images/class.png)
-![ClassB](/tutorials/images/classB.png "Ground + Buildings")
-![ClassT](/tutorials/images/classT.png "Ground + Vegetation")
+Then use lasview to see the classification results  
+![Class](/tutorials/images/class.png)  
+![ClassB](/tutorials/images/classB.png "Ground + Buildings")  
+![ClassT](/tutorials/images/classT.png "Ground + Vegetation")  
 
 
 We can visually check individual tiles for errors but it is hard to inspect the whole dataset this way. Let’s create a raster image using the classification flag to inspect the classification results over the whole area.
 ```
 Lasgrid -i tiles\*c.laz -classification -merged -drop_withheld -odir products -otif -o classification.tif -utm 15N -nad83
 ```
-Open the raster file in ArcMap and chance the Symbology to “unique values” and set the color scheme to display the results.
-![ArcMapSymb](/tutorials/images/ArcMapSymb.png)
+Open the raster file in ArcMap and chance the Symbology to “unique values” and set the color scheme to display the results.  
+![ArcMapSymb](/tutorials/images/ArcMapSymb.png)  
 
 
 ### Building footprints
@@ -64,14 +64,14 @@ Once the buildings and trees have been classified, we can extract building footp
 ```
 Lasboundary -i tiles\*c.laz -disjoint -concavity 2.5 -keep_classification 6 -overview -oshp -o products\buildings.shp
 ```
-![BuildFP](/tutorials/images/BuildFPb.png "Building footprints shapefile")
+![BuildFP](/tutorials/images/BuildFPb.png "Building footprints shapefile")  
 	
-![BuildFP_class](/tutorials/images/BuildFP_class.png "Overlay on classification")
+![BuildFP_class](/tutorials/images/BuildFP_class.png "Overlay on classification")  
 
 
 
 ### Height Normalize
-Creating an elevation raster is one of the most common uses of aerial lidar. There are many terms that are used to describe different representations of 3D terrain. You will see DSM, DTM, DEM, CHM, DBM, nDSM and more. Sometimes these terms have different meanings so the best way to distinguish between them is rigorous documentation in how the model is created and the intended application. 
+Creating an elevation raster is one of the most common uses of aerial lidar. There are many terms that are used to describe different representations of 3D terrain. You will see DSM, DTM, DEM, CHM, DBM, nDSM and more. Sometimes these terms have different meanings so the best way to distinguish between them is rigorous documentation in how the model is created and the intended application.   
 ![vertical](/tutorials/images/vertical.jpg "Vertical Profile")
 
 The most basic method to generate a Digital Surface Model (DSM) raster from the point cloud is to use the highest elevation value from all points that fall in each grid cell. However, this only works at resolutions that are much coarser than the point spacing. To produce higher resolution surface models, we will need to interpolate between points. The interpolation method employed in LAStools is 2D Delaunay triangulation which produces a Triangular Irregular Network (TIN) that is then rasterized using a user-defined resolution. A normalized DSM (nDSM) is created in a similar way but the elevations are height normalized to the ground surface (DEM). This normalization is often completed using the raster products where DSM - DEM = nDSM. The ‘normalized DSM’ then represents height rather than elevation. However, we can also normalize the point cloud directly. This can be useful for detailed forestry analysis where the height and structure above ground level is more relevant than elevation. 
@@ -81,14 +81,14 @@ The following command will normalize our classified LAZ dataset to the ground. I
 lasheight -i tiles\*c.laz -replace_z -odix _z -cores 7 -olaz
 ```
 
-![HeightNorm](/tutorials/images/heightNorm.png "Height normalized point cloud")
+![HeightNorm](/tutorials/images/heightNorm.png "Height normalized point cloud")  
  
 
 ### Spike-free DSM
-Next, we will create a surface model from the normalized LAZ using the spike-free method in las2dem. Instead of using only the first returns to create the DSM, this method uses all relevant returns. In many tutorials, the first returns are assumed to represent the highest features on the landscape. In the real world, this is not necessarily the case. The biggest issue is that some first returns will reach the ground either by penetrating through the tree canopy or from off-nadir scan angle. The result is very steep ‘spike’ triangles that occur in vegetation and on the edges of buildings. These turn into ‘data pits’ in the generated surface model that do not represent the 3D surface of the landscape. By using the ‘spike-free’ flag with las2dem, we eliminate the spikes and interpolate relevant returns in a stepwise fashion beginning with the highest z-value points, triangulating the proximate points, and proceeding downwards. 
+Next, we will create a surface model from the normalized LAZ using the spike-free method in las2dem. Instead of using only the first returns to create the DSM, this method uses all relevant returns. In many tutorials, the first returns are assumed to represent the highest features on the landscape. In the real world, this is not necessarily the case. The biggest issue is that some first returns will reach the ground either by penetrating through the tree canopy or from off-nadir scan angle. The result is very steep ‘spike’ triangles that occur in vegetation and on the edges of buildings. These turn into ‘data pits’ in the generated surface model that do not represent the 3D surface of the landscape. By using the ‘spike-free’ flag with las2dem, we eliminate the spikes and interpolate relevant returns in a stepwise fashion beginning with the highest z-value points, triangulating the proximate points, and proceeding downwards.  
 
-![firstreturn](/tutorials/images/firstreturn.png "First Return ")
-![spikefree](/tutorials/images/spikefree.png "Spike-free DSM")
+![firstreturn](/tutorials/images/firstreturn.png "First Return")  
+![spikefree](/tutorials/images/spikefree.png "Spike-free DSM") 
 
 The key parameter for the spike-free method is the ‘freeze constraint’ which is the threshold value for the edge length of any triangle in meters. Once a triangle exceeds the threshold, it is frozen in place. The appropriate value for the ‘freeze-constraint’ depends on the pulse-density. The recommended value is about three times the average pulse spacing. 
 
@@ -104,7 +104,7 @@ Lasgrid -i tiles\*nDSM.bil -merged -o products\nDSM.bil -obil -utm 15N -nad83
 While a nDSM is great for modeling height of trees, the height model ignores the fact that the tree canopy doesn’t extend to the ground in the real world. In the point cloud, we can clearly see the gap between the lowest hanging branches and the ground, so let’s try to model the underside of the tree crown as well. For this to work, the point density must be sufficient enough to provide returns from the inner branches of the tree. Attempting to model the interior of the tree crown also depends on leaf-off conditions to allow laser penetration to the lower branches. 
 	
 
-![treecrown](/tutorials/images/treecrown.png)
+![treecrown](/tutorials/images/treecrown.png)  
 
 To create the minimum height model, we will use the same las2dem command but we are going to trick it by inverting the normalized point cloud. The spike-free surface model is built from the top-down so by inverting the point cloud we are now surface modeling from the bottom-up. To invert the point cloud, simply use the generic las2las and multiply the z value by -1 with the flag ‘-scale_z -1’ and we will remove all points below the threshold of 1 meter (returns on the ground) using ‘-drop_z_below 1’. The las2dem command is the same as before with a freeze constraint of 2 meters, step size of 1, and kill triangles larger than 5 meters. The final step will re-vert the surface model to be right-side up again.
 
@@ -144,7 +144,7 @@ raster calculator	 "nDSM.bil"-"minimum.bil" = CrownHeight.tif
 raster calculator 	“Con(IsNull("CrownHeight.tif "),0,"CrownHeight.tif”) 
 ```
 
-![CrownModel](/tutorials/images/CrownModel.png "Crown Height Raster")
+![CrownModel](/tutorials/images/CrownModel.png "Crown Height Raster")  
 
 
 More resources
