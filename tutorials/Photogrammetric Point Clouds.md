@@ -18,7 +18,7 @@ lasview -i ../3/photogrammetric.laz
 ```
 
 ![](/tutorials/images/photogram.png "")  
-**Photogrammetric point cloud - Hubachek Wilderness Research Center**
+*Photogrammetric point cloud - Hubachek Wilderness Research Center*
 
 
 As the data appears in the view window, notice how the pattern in which the points are drawn. This corresponds with the point order within the LAZ file. Point order matters in a big way when it comes to reading and processing point clouds. This point cloud is not stored in the most spatially coherent order. The points are arranged in long vertical lines rather than small square cubes. We can reorder the points using the LASsort tool. 
@@ -32,7 +32,7 @@ lassort -i ../3/photogrammetric.laz -rescale 0.01 0.01 0.01 -set_return_number 1
 
 
 ![](/tutorials/images/files.png "")  
-**Result: The output file takes up 35% less disk space and will read much faster in the additional processing steps. **
+*Result: The output file takes up 35% less disk space and will read much faster in the additional processing steps. *
 
 ### Vertical datums
 
@@ -41,7 +41,7 @@ Now that we have that out of the way, let’s compare our point cloud with lidar
 lasview -i ../3/photogrammetric_s.laz -i lidar_ground.laz -faf
 ```
 ![](/tutorials/images/profile_ground.png "")  
-**Vertical profile of lidar and photogrammetric point clouds**
+*Vertical profile of lidar and photogrammetric point clouds*
 
 This doesn’t look good, the ground points are above the trees in our collect. What is going on here? 
 
@@ -54,7 +54,7 @@ We need a list of control points to use as an input for LAScontrol. These must b
 lasthin -i ../3/lidar_ground.laz -step 20 -otxt
 ```
 ![](/tutorials/images/ground.png "")  
-**Thinned ground points**
+*Thinned ground points*
 
 ### LAScontrol 
 
@@ -74,7 +74,7 @@ This tells us that 1) 492 control points are not within range of photogrammetric
 Check your directory for the output LAZ file that ends with ...adj.laz. Open this file and lidar_ground.laz with LASview to verify the results. They are now aligned to the same reference frame and we are able to normalize the point cloud. 
 
 ![](/tutorials/images/profile.png "")  
-**lidar points: red, photogrammetric points: green**
+*lidar points: red, photogrammetric points: green*
 
 
 ### LASheight
@@ -92,7 +92,7 @@ third pass. computing heights for 68042519 points ...
 done with 'photogrammetric_s_adj_z.laz'. total time 65.833 sec.
 
 ![](/tutorials/images/points.png "")  
-**Normalized photogrammetric point cloud**
+*Normalized photogrammetric point cloud*
 
 
 ### LAScanopy
@@ -100,7 +100,7 @@ done with 'photogrammetric_s_adj_z.laz'. total time 65.833 sec.
 Now we can begin to calculate canopy metrics using the tool LAScanopy. There are many metrics that can be produced from the point cloud. A few of the most popular for forestry applications are average, 95th percentile, percent coverage, and standard deviation. We will first use a polygon shapefile as our AOI using the ‘-lop’ input which stands for ‘list of plots’ and takes a shapefile as an input. The shape file contains four 1/10 acre plots and a stand boundary. 
 
 ![](/tutorials/images/map.png "")  
-**Plots and stands for forestry metrics**
+*Plots and stands for forestry metrics*
 
 Canopy metrics are calculated by filtering the points by a height threshold. This is to remove ground points from the calculation and more accurately describe the distribution of canopy points. The default for the height cutoff in LAScanopy is 1.37 m (4.5 ft; international breast height). If necessary, this can be changed using the ‘-height_cutoff’ but we will use the default settings for this example.
 ```
@@ -129,4 +129,4 @@ laspublish -i photogrammetric_s_adj.laz -i lidar_ground.laz -rgb -o portal.html
 This will create a set of files in a new folder that is titled laspublish.xxxxx. Inside will be libs, pointclouds folders as well as portal.html and lasmap_portal.html. You can open the ‘portal.html’ file locally using Mozilla Firefox.
  
 ![](/tutorials/images/potree.png "") 
-**Potree webGL point cloud viewer**
+*Potree webGL point cloud viewer*
