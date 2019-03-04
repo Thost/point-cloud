@@ -142,7 +142,7 @@ You can identify systematic issues with lidar collect from the colors in these i
 
 In the ‘difference’ image, highly saturated blue or red in open areas (not trees/buildings) indicates vertical misalignment between flightlines. Small misalignment is common due to the positional accuracy of the data which we will quantify in the next step using high-accuracy GPS control points.
 
-LAScontrol
+### LAScontrol
 To quantify the vertical accuracy of the lidar point cloud, we will compare the LAZ flight lines to a set of 21 high-accuracy ground control points. Copy the text below into a spreadsheet and save it as a csv file in ‘strips_raw\controlpoints.csv’ 
 
 Easting|Northing|Z
@@ -178,14 +178,13 @@ Lascontrol -i strips_raw\*.laz -cp strips_raw\controlpoints.csv -cp_out products
 The standard output will produce an error report with average absolute error, root mean square error, standard deviation of the errors, average error, and skew. It will also produce a txt file report that contains a copy of the original controls points with two values prefixed. The values added are the computed z-value at the control point and calculated z-difference in meters for each point. The contracted vertical accuracy of the lidar collection was 15 cm Z-RMSE. Does the point cloud meet this accuracy standard? Plot the distribution of z-error. Are there any outliers? What might be the cause of z-error?
 
 
-
-
 ### LAStile
 Next we will convert the flightline strips into a tiled LAZ dataset. The “lastile” command is the right tool for the job. We will set the tile size to 1000 meters with a 50 m buffer around each tile. It is critically important to have buffered tiles for any classification or surface model processing. Buffered points are given the “withheld” flag to be easily dropped later. We also rescale the coordinate resolution to a more appropriate centimeter resolution. The output name is the root name of the tiles. 
 ```
 Lastile -i strips_raw\*.laz -tile_size 1000 -buffer 50 -flag_as_withheld -rescale 0.01 0.01 0.01 -odir tiles -o UMN.laz
 ```
 ![lastile](images/1F.png) 
+
 The GUI version will look like this and will give you an idea of how many tiles will be produced. It can be useful for finding the optimal tile arrangement.
 
 ### LASboundary
@@ -222,12 +221,12 @@ Lasgrid -i tiles\*.bil -merged -o numberReturns.tif -odir products -otif -utm 15
 
 Write a script to rasterize the elevation and intensity on the tiles using lasgrid then merge.
 
-![pointdensity](images/1G.png) 
-Point density raster
-Darker = Greater
+![pointdensity](images/1G.png)  
+Point density raster  
+Darker = Greater 
 
-![numReturns](images/1H.png) 
-Number of returns raster
+![numReturns](images/1H.png)  
+Number of returns raster  
 Darker = greater
 
 We’ve now completed a suite of validation checks on the lidar point cloud and created a spatially tiled LAZ dataset from flight lines. The next exercise will use the tiled point cloud dataset for classification, DEM creation, normalization, and feature extraction. 
