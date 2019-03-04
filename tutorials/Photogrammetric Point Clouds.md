@@ -32,7 +32,7 @@ lassort -i ../3/photogrammetric.laz -rescale 0.01 0.01 0.01 -set_return_number 1
 
 
 ![](/tutorials/images/files.png "")  
-*Result: The output file takes up 35% less disk space and will read much faster in the additional processing steps. *
+*Result: The output file takes up 35% less disk space and will read much faster in the additional processing steps.*
 
 ### Vertical datums
 
