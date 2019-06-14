@@ -11,9 +11,9 @@ open a command terminal
 Run the following command 
 Z:\adjusted_dsms\process\THP.bat <file.laz> <control_points.csv>
 
-> file.laz - the full path of a 2m SETSM dem in LAZ format 
+ile.laz - the full path of a 2m SETSM dem in LAZ format 
 	
-> control_points - the full path of a list of XYZ control points. Try one from these options depending on region
+control_points - the full path of a list of XYZ control points. Try one from these options depending on region
 	Z:\adjusted_dsms\reference_points\NGS\NGS_UTM15N_xyz.csv
 	Z:\adjusted_dsms\reference_points\NGS\NGS_UTM16N_xyz.csv
 	Z:\adjusted_dsms\reference_points\NGS\NGS_UTM17N_xyz.csv
