@@ -28,10 +28,10 @@ Z:\adjusted_dsms\process\THP.bat Z:\adjusted_dsms\process\test\W1W2_20100617_102
 This will create a temp folder with the same name as the laz file and output the ground points and adjusted files in the same location as the input file. The temp folder will be automatically be removed after completion.
 
 products:  
-<file>_g_adj.tif -	vertically adjusted dem in tif format + tfw world file  
-<file>_g_adj.laz - 	vertically adjusted dem in laz format  
-<file>_g.laz - 	laz rough ground points used in alignment (not useful for bare-earth dem)  
-<file>_ground.tif - 	count of ground points tif used in alignment (not useful for bare-earth dem) + tfw world file  
-<file>_accuracy.txt - vertical accuracy report: average absolute, RMS, standard deviation, average of elevation errors  
-<file>_offset.txt - vertical offset report: value calculated for vertical offset  
+file_g_adj.tif -	vertically adjusted dem in tif format + tfw world file  
+file_g_adj.laz - 	vertically adjusted dem in laz format  
+file_g.laz - 	laz rough ground points used in alignment (not useful for bare-earth dem)  
+file_ground.tif - 	count of ground points tif used in alignment (not useful for bare-earth dem) + tfw world file  
+file_accuracy.txt - vertical accuracy report: average absolute, RMS, standard deviation, average of elevation errors  
+file_offset.txt - vertical offset report: value calculated for vertical offset  
 
