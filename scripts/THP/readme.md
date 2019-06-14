@@ -1,4 +1,4 @@
-adjust SETSM dem products to a set of XYZ control points
+**adjust SETSM dem products to a set of XYZ control points**
 Trevor Host 06/14/2019
 
 reqs:
@@ -11,7 +11,7 @@ open a command terminal
 Run the following command 
 Z:\adjusted_dsms\process\THP.bat <file.laz> <control_points.csv>
 
-ile.laz - the full path of a 2m SETSM dem in LAZ format 
+file.laz - the full path of a 2m SETSM dem in LAZ format 
 	
 control_points - the full path of a list of XYZ control points. Try one from these options depending on region
 	Z:\adjusted_dsms\reference_points\NGS\NGS_UTM15N_xyz.csv
